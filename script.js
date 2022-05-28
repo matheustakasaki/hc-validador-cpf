@@ -16,18 +16,34 @@ function handleValidaCpf(cpf) {
         console.log(soma);
 
         var resultado = (soma % 11) < 2 ? 0 : 11 - (soma % 11)
-
         // Validação do primeiro dígito
         if (resultado != digitos.charAt(0)) {
             return false
         }
-        console.log(digitos.toString().charAt(0) + ' é a primeira posição da variável soma')
+
+        soma = 0;
+        numeros = cpf.substring(0, 10);
+
+        for (let k = 11; k > 1; k--) {
+            soma += numeros.charAt(11 - k) * k;
+        }
+        resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+
+        // validação do segundo dígito
+        if (resultado != digitos.charAt(1)) {
+            return false
+        }
+        // console.log(digitos.toString().charAt(0) + ' é a primeira posição da variável soma')
+
+        return true
     }
-    return cpf
 }
 
 function handleValidacao() {
     console.log('Iniciando validação cpf');
+
+    document.getElementById('success').style.display = 'none'
+    document.getElementById('error').style.display = 'none'
 
     var cpf = document.getElementById('cpf').value;
 
